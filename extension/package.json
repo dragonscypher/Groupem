@@ -1,0 +1,24 @@
+{
+    "name": "groupem-extension",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "vite build && node ./flattenHtml.mjs",
+        "dev": "vite",
+        "pack": "npm run build && powershell -NoLogo -Command Compress-Archive -Path dist/* -DestinationPath groupem-extension.zip -Force",
+        "test": "echo 'No extension tests yet'"
+    },
+    "dependencies": {
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "webextension-polyfill": "^0.10.0",
+        "onnxruntime-web": "^1.18.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.4.5",
+        "@types/react": "^18.2.21",
+        "@types/react-dom": "^18.2.7",
+        "vite": "^5.2.0",
+        "@vitejs/plugin-react": "^4.2.1"
+    }
+}

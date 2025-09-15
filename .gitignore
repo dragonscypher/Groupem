@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+.env
+*.log
+.prisma/
+coverage/
+.playwright-cache/
+playwright-report/
+ml-service/.venv/
+ml-service/__pycache__/
+ml-service/.mypy_cache/

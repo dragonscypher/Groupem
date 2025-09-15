@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   String   @id @default(cuid())
+  email                String   @unique
+  phone                String?  @unique
+  passwordHash         String
+  totpSecret           String?
+  webAuthnCredentialId String?
+  webAuthnPublicKey    String?
+  encSalt              String?
+  encKeyCipher         String?
+  encKeyIv             String?
+  createdAt            DateTime @default(now())
+  sessions             Session[]
+  storageRecords       StorageRecord[]
+  files                File[]
+  embeddings           Embedding[]
+  webAuthnChallenges   WebAuthnChallenge[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  device       String
+  groupsCipher String
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+}
+
+model StorageRecord {
+  id          String   @id @default(cuid())
+  key         String
+  valueCipher String
+  tags        String
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+
+  @@index([key])
+}
+
+model File {
+  id        String   @id @default(cuid())
+  name      String
+  mime      String
+  size      Int
+  tags      String
+  blobPath  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model Embedding {
+  id       String  @id @default(cuid())
+  objectId String
+  kind     String
+  vector   Bytes
+  dim      Int
+  user     User    @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@index([objectId])
+}
+
+model WebAuthnChallenge {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  challenge String
+  type      String   // 'registration' | 'authentication'
+  createdAt DateTime @default(now())
+  consumed  Boolean  @default(false)
+  @@index([userId])
+}

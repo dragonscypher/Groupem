@@ -1,0 +1,36 @@
+{
+    "manifest_version": 3,
+    "name": "Groupem",
+    "version": "1.0.0",
+    "description": "Smart ML powered tab grouping and sync via MCP.",
+    "permissions": [
+        "tabs",
+        "storage",
+        "activeTab",
+        "scripting",
+        "notifications",
+        "management"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "options_page": "options.html",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "activator.js"
+            ],
+            "run_at": "document_start"
+        }
+    ]
+}

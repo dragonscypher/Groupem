@@ -1,0 +1,32 @@
+{
+    "name": "groupem-monorepo",
+    "private": true,
+    "workspaces": [
+        "extension",
+        "mcp-server",
+        "shared",
+        "ml-service"
+    ],
+    "scripts": {
+        "build": "npm -w shared run build && npm -w mcp-server run build && npm -w extension run build",
+        "dev:mcp": "npm -w mcp-server run dev",
+        "dev:ext": "npm -w extension run dev",
+        "dev:ml": "uvicorn app.main:app --reload --port 8000 --app-dir ml-service/app",
+        "dev": "concurrently \"npm run dev:mcp\" \"npm run dev:ml\"",
+        "demo:build-ext": "npm -w extension run build",
+        "demo": "npm run demo:build-ext && node mcp-server/dist/index.js",
+        "test": "npm -w mcp-server test && npm -w extension test",
+        "test:e2e": "npx playwright test",
+        "format": "prettier -w ."
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@playwright/test": "^1.47.0",
+        "@types/cors": "^2.8.19",
+        "@types/uuid": "^10.0.0",
+        "concurrently": "^8.2.2",
+        "playwright": "^1.47.0",
+        "prettier": "^3.2.5",
+        "typescript": "^5.4.5"
+    }
+}
