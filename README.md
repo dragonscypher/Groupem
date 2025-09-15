@@ -66,7 +66,7 @@ See `CONTRIBUTING.md` for guidelines, scripts, and commit style.
 - Run `npm run build` and `npm test`.
 - Tag release: `git tag -a vX.Y.Z -m "Release vX.Y.Z"; git push --tags`.
 - Upload packaged extension (zip `extension/dist`).
-```
+
 
 ## Tests
 ```powershell
